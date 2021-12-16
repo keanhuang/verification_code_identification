@@ -6,7 +6,7 @@ Created on Thu Jul 12 16:34:16 2018
 """
 
 import random
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from keras import backend as K
 
 from dataset_load import load_dataset_cnn
