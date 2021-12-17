@@ -4,11 +4,13 @@ Created on Mon Jul 16 21:39:44 2018
 
 @author: yy
 """
-from keras.preprocessing.image import ImageDataGenerator
 
-from keras.optimizers import SGD, Adam
-from keras.models import load_model
-from keras import backend as K
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras import optimizers
+# from keras.optimizers import SGD, Adam
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.models import load_model
+from tensorflow.keras import backend as K
 
 from dataset_split import Dataset
 from model_gru_ctc import get_gru_ctc_model
@@ -34,8 +36,10 @@ class Training_Predict:
         #训练模型
     def train(self, dataset, batch_size = 32, nb_epoch = 15, data_augmentation = False):        
         #采用SGD+momentum的优化器进行训练，首先生成一个优化器对象  
-#        sgd = SGD(lr = 0.01, decay = 1e-6, momentum = 0.9, nesterov = True) 
-        adam = Adam()
+#        sgd = SGD(lr = 0.01, decay = 1e-6, momentum = 0.9, nesterov = True)
+
+        adam = optimizers.Adam()
+        # .Adam()
         self.model.compile(loss='categorical_crossentropy',
                            optimizer=adam,
                            metrics=['accuracy'])   #完成实际的模型配置工作
@@ -71,8 +75,8 @@ class Training_Predict:
             #利用生成器开始训练模型
             self.model.fit_generator(datagen.flow(dataset.train_images, dataset.train_labels,
                                                    batch_size = batch_size),
-                                     samples_per_epoch = dataset.train_images.shape[0],
-                                     nb_epoch = nb_epoch,
+                                     # samples_per_epoch = dataset.train_images.shape[0],
+                                     # nb_epoch = nb_epoch,
                                      validation_data = (dataset.valid_images, dataset.valid_labels))
         
         
@@ -112,17 +116,21 @@ class Training_Predict:
     
     
 if __name__ == '__main__':
-    dataset = Dataset('./img_data/all/')    
-    dataset.load()
+    dataset = Dataset('../train_data/')
+    dataset.load( )
     #训练模型，这段代码不用，注释掉  
-    model = Training_Predict()
-    model.build_model(dataset)
-    model.train(dataset)
-    model.save_model(file_path = './model/cnn_model.h5')
+    # model = Training_Predict()
+    # model.build_model(dataset)
+    # model.train(dataset, data_augmentation=True)
+    # model.save_model(file_path = './model/cnn_model.h5')
     '''
     #评估模型
     model = Model()
     model.load_model(file_path = './model/cnn_model.h5')
     model.evaluate(dataset)
     '''
- 
+
+    model = Training_Predict()
+    model.load_model(file_path = './model/cnn_model.h5')
+    model.evaluate(dataset)
+ #

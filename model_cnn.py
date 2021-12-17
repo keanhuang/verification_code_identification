@@ -5,10 +5,10 @@ Created on Tue Jul 17 08:43:26 2018
 @author: yy
 """
 from __future__ import division
-from keras.models import Model
-from keras.layers import Input, Lambda, Activation, Conv2D, MaxPooling2D, ZeroPadding2D, Reshape, Concatenate,Flatten,Dense,Dropout
-from keras.regularizers import l2
-import keras.backend as K
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input, Lambda, Activation, Conv2D, MaxPooling2D, ZeroPadding2D, Reshape, Concatenate,Flatten,Dense,Dropout
+from tensorflow.keras.regularizers import l2
+import tensorflow.keras.backend as K
 from dataset_load import label_parse
 obj = label_parse()
 #image,text,vec = obj.gen_image()

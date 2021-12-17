@@ -7,11 +7,11 @@ Created on Thu Jul 12 16:34:16 2018
 
 import random
 from sklearn.model_selection import train_test_split
-from keras import backend as K
+from tensorflow.keras import backend as K
 
 from dataset_load import load_dataset_cnn
 
-image_size = (128, 32)
+image_size = (32, 32)
 
 class Dataset:
     def __init__(self, path_name):
@@ -40,11 +40,12 @@ class Dataset:
         images, labels = load_dataset_cnn(self.path_name)        
         
         train_images, valid_images, train_labels, valid_labels = train_test_split(images, labels, test_size = 0.3, random_state = random.randint(0, 100))        
-        _, test_images, _, test_labels = train_test_split(images, labels, test_size = 0.5, random_state = random.randint(0, 100))                
-        
+        _, test_images, _, test_labels = train_test_split(images, labels, test_size = 0.5, random_state = random.randint(0, 100))
+
+
         #当前的维度顺序如果为'th'，则输入图片数据时的顺序为：channels,rows,cols，否则:rows,cols,channels
         #这部分代码就是根据keras库要求的维度顺序重组训练数据集
-        if K.image_dim_ordering() == 'th':
+        if False  and K.image_dim_ordering() == 'th':
             train_images = train_images.reshape(train_images.shape[0], img_channels, img_rows, img_cols)
             valid_images = valid_images.reshape(valid_images.shape[0], img_channels, img_rows, img_cols)
             test_images = test_images.reshape(test_images.shape[0], img_channels, img_rows, img_cols)

@@ -66,6 +66,7 @@ def captcha_draw(size_im, nb_cha, set_cha, fonts=None, overlap=0.0,
     rate_cha = 0.8  # rate to be tuned
     width_im, height_im = size_im
     width_cha = int(width_im / max(nb_cha - overlap, 3))  # 字符区域宽度
+    width_cha = width_im * 0.8
 #    height_cha = height_im * 1.2  # 字符区域高度
     height_cha = height_im * 0.8  # 字符区域高度
     bg_color = 'white'
@@ -176,6 +177,7 @@ def test():
     print("test begining ------------------")
 #    size_im = (100, 30)
     size_im = (128, 32)
+    size_im = (32, 32)
     overlaps = [0.8, 0.4, 0.6, 0.8, 0.4, 0.6, 0.5, 0.0, 0.2]
     rd_text_poss = [False, True]
     rd_text_sizes = [False, True]
@@ -190,8 +192,8 @@ def test():
     ]
     noises = [['point'], ['line'], ['line', 'point']]
     rotates = [False]
-    nb_chas = [4]
-    nb_image = 100#1000 * 100
+    nb_chas = [1] #生成1个字符
+    nb_image =  100*500
 #    font_dir = '/usr/share/fonts/truetype/ubuntu-font-family'
 #    font_dir = 'C:/Windows/Fonts/'
     font_dir = './fonts/'
@@ -218,12 +220,12 @@ def test():
                 noise = random.choice(noises)
                 rotate = random.choice(rotates)
                 nb_cha = random.choice(nb_chas)
-#                font_path = random.choice(font_paths)
-                font_path = font_paths[0]
+                font_path = random.choice(font_paths)
+#                 font_path = font_paths[0]
                 if num_pic % 1001 == 0:
                     dir_folder += 1
                 dir_name = 'train_data'
-                dir_path = '../img_data/' + dir_name + '/'
+                dir_path = '../../' + dir_name + '/'
                 captcha_draw(size_im=size_im, nb_cha=nb_cha, set_cha=set_cha,
                              overlap=overlap, rd_text_pos=rd_text_pos, rd_text_size=rd_text_size,
                              rd_text_color=rd_text_color, rd_bg_color=rd_bg_color, noise=noise,
